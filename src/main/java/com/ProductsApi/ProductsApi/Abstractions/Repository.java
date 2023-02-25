@@ -4,7 +4,7 @@ import org.springframework.data.domain.Page;
 
 import java.util.Optional;
 
-@org.springframework.stereotype.Repository
+
 public interface Repository<ID,T extends BaseEntity<ID>> {
 
     PageResponse<T> getAll(Optional<Integer> offset, Optional<Integer> limit);

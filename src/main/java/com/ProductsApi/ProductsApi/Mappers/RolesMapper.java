@@ -7,11 +7,13 @@ import com.ProductsApi.ProductsApi.Dto.RolesResponse;
 import com.ProductsApi.ProductsApi.Dto.RolesResponsePage;
 import com.ProductsApi.ProductsApi.Dto.RolesUpdate;
 import com.ProductsApi.ProductsApi.Model.Roles;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository()
 public class RolesMapper implements Mapper<Integer, Roles, RolesRequest, RolesResponse, RolesUpdate> {
     @Override
     public Roles map(RolesRequest request, String username) {

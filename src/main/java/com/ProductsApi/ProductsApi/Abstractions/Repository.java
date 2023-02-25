@@ -1,15 +1,18 @@
 package com.ProductsApi.ProductsApi.Abstractions;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.NoRepositoryBean;
 
+import java.io.Serializable;
 import java.util.Optional;
 
+@NoRepositoryBean
+public interface Repository<ID extends Serializable, T> extends JpaRepository<T, ID> {
 
-public interface Repository<ID,T extends BaseEntity<ID>> {
+    Page<T> findAllByStatus(Pageable page, boolean status);
 
-    PageResponse<T> getAll(Optional<Integer> offset, Optional<Integer> limit);
-    T getById(ID id);
-    T save(T entity);
-    T update(T entity);
-    void delete(ID id);
+    T getReferenceByIdAndStatus(ID id, boolean status);
+
 }

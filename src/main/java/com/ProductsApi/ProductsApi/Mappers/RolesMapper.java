@@ -7,6 +7,7 @@ import com.ProductsApi.ProductsApi.Dto.RolesResponse;
 import com.ProductsApi.ProductsApi.Dto.RolesResponsePage;
 import com.ProductsApi.ProductsApi.Dto.RolesUpdate;
 import com.ProductsApi.ProductsApi.Model.Roles;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
@@ -26,12 +27,12 @@ public class RolesMapper implements Mapper<Integer, Roles, RolesRequest, RolesRe
     }
 
     @Override
-    public PageResponse<RolesResponse> map(PageResponse<Roles> entities) {
+    public PageResponse<RolesResponse> map(Page<Roles> entities) {
         List<RolesResponse> rolesResponse = new ArrayList<>();
-        for(Roles rol: entities.getElements()) {
+        for(Roles rol: entities.getContent()) {
             rolesResponse.add(new RolesResponse(rol.getId(), rol.getDescription()));
         }
-        return new RolesResponsePage(rolesResponse, entities.getTotalItems());
+        return new RolesResponsePage(rolesResponse, entities.getTotalElements());
     }
 
     @Override

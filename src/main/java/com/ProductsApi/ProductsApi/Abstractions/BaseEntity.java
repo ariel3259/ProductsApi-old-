@@ -1,8 +1,9 @@
 package com.ProductsApi.ProductsApi.Abstractions;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public interface BaseEntity<ID> {
+public interface BaseEntity<ID extends Serializable> {
 
     void setId(ID id);
     ID getId();

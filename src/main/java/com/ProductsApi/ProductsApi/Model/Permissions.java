@@ -5,29 +5,34 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 @Entity()
-@Table(name="roles", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "description")
+@Table(name = "permissions", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"description"})
 })
-@AllArgsConstructor()
-@NoArgsConstructor
 @Getter()
-public class Roles implements BaseEntity<Integer> {
-    @Id() @Column(name="roles_id") @GeneratedValue(strategy = GenerationType.AUTO)
-    private int rolesId;
+@AllArgsConstructor
+@NoArgsConstructor
+public class Permissions implements BaseEntity<Integer> {
 
-    @Setter
+    @Id() @Column(name = "permissions_id") @GeneratedValue(strategy = GenerationType.AUTO)
+    private int permissionsId;
+
     @Column(unique = true)
     private String description;
 
-    @Column()
-    private boolean status;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "roles_policies",
+            joinColumns = @JoinColumn(name = "permission_id"),
+            inverseJoinColumns =  @JoinColumn(name = "rol_id")
+    )
+    private Set<Roles> roles;
 
     @Column(name = "created_at")
     private Date createdAt;
@@ -41,18 +46,10 @@ public class Roles implements BaseEntity<Integer> {
     @Column(name = "updated_by")
     private String updatedBy;
 
-    @OneToMany(mappedBy = "rol")
-    private Set<Users> users;
+    @Column
+    private boolean status;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "roles_policies",
-            joinColumns = @JoinColumn(name = "rol_id"),
-            inverseJoinColumns =  @JoinColumn(name = "permission_id")
-    )
-    private Set<Permissions> permissions;
-
-    public Roles(String d, String u) {
+    public Permissions(String d, String u){
         Date today = new Date(System.currentTimeMillis());
         description = d;
         createdBy = u;
@@ -64,11 +61,12 @@ public class Roles implements BaseEntity<Integer> {
 
     @Override
     public void setId(Integer integer) {
-        rolesId = integer;
+        permissionsId = integer;
     }
+
     @Override
     public Integer getId() {
-        return rolesId;
+        return permissionsId;
     }
 
     @Override

@@ -8,12 +8,14 @@ import org.springframework.data.repository.NoRepositoryBean;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @NoRepositoryBean
 public interface Repository<ID extends Serializable, T> extends JpaRepository<T, ID> {
 
     Page<T> findAllByStatus(Pageable page, boolean status);
     List<T> findAllByStatus(boolean status);
+    Set<T> findAllByIdsAndStatus(Iterable<ID> ids, boolean status);
     T getReferenceByIdAndStatus(ID id, boolean status);
 
 }

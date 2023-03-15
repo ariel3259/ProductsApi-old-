@@ -1,7 +1,7 @@
 package com.ProductsApi.ProductsApi.Services;
 
 import com.ProductsApi.ProductsApi.Model.Permissions;
-import com.ProductsApi.ProductsApi.Repositories.PermissionsRepositories;
+import com.ProductsApi.ProductsApi.Repositories.PermissionsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,7 +14,7 @@ import java.util.Optional;
 public class PermissionsService {
 
     @Autowired
-    private PermissionsRepositories repository;
+    private PermissionsRepository repository;
 
     public Page<Permissions> getAll(Optional<Integer> page, Optional<Integer> limit) {
         Pageable pageRequest = PageRequest.of(page.orElse(0), limit.orElse(10));

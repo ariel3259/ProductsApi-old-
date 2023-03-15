@@ -4,5 +4,5 @@ import com.ProductsApi.ProductsApi.Abstractions.Repository;
 import com.ProductsApi.ProductsApi.Model.Permissions;
 
 @org.springframework.stereotype.Repository
-public interface PermissionsRepositories extends Repository<Integer, Permissions> {
+public interface PermissionsRepository extends Repository<Integer, Permissions> {
 }

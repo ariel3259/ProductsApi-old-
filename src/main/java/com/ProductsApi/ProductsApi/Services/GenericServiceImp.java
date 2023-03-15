@@ -24,18 +24,21 @@ public abstract class GenericServiceImp<ID extends Serializable, Ent extends Bas
         int page = offset.orElse(0) * limit.orElse(10);
         Pageable pageable = PageRequest.of(page, limit.orElse(10));
         Page<Ent> entities = repository.findAllByStatus(pageable, true);
-        return mapper.map(entities);
+        PageResponse<Res> responsePage = mapper.map(entities);
+        return responsePage;
     }
 
     public Res getOne(ID id) {
         Ent entity = repository.getReferenceByIdAndStatus(id, true);
-        return mapper.map(entity);
+        Res response = mapper.map(entity);
+        return response;
     }
 
     public Res save(Req request, String username) {
         Ent entityToSave = mapper.map(request, username);
         Ent entitySaved = repository.save(entityToSave);
-        return mapper.map(entitySaved);
+        Res response = mapper.map(entitySaved);
+        return response;
     }
 
     public Res update(Upd updateRequest, ID id, String username) {
@@ -44,7 +47,8 @@ public abstract class GenericServiceImp<ID extends Serializable, Ent extends Bas
         Ent entityToUpdate = mapper.map(updateRequest, entity, username);
         entityToUpdate.setId(id);
         Ent entityUpdated = repository.save(entityToUpdate);
-        return mapper.map(entityUpdated);
+        Res response = mapper.map(entityUpdated);
+        return response;
     }
 
     public void delete(ID id) {

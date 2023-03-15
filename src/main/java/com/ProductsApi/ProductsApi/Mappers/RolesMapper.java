@@ -9,9 +9,6 @@ import com.ProductsApi.ProductsApi.Dto.RolesUpdate;
 import com.ProductsApi.ProductsApi.Model.Roles;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Repository;
-
-import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository()
@@ -28,10 +25,10 @@ public class RolesMapper implements Mapper<Integer, Roles, RolesRequest, RolesRe
 
     @Override
     public PageResponse<RolesResponse> map(Page<Roles> entities) {
-        List<RolesResponse> rolesResponse = new ArrayList<>();
-        for(Roles rol: entities.getContent()) {
-            rolesResponse.add(new RolesResponse(rol.getId(), rol.getDescription()));
-        }
+        List<RolesResponse> rolesResponse = entities
+                .stream()
+                .map(entity -> new RolesResponse(entity.getId(), entity.getDescription()))
+                .toList();
         return new RolesResponsePage(rolesResponse, entities.getTotalElements());
     }
 

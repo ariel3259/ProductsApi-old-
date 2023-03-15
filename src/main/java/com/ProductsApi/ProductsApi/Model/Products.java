@@ -10,67 +10,65 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.sql.Date;
-import java.util.List;
 import java.util.Set;
 
-@Entity()
-@Table(name="roles", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "description")
-})
-@AllArgsConstructor()
+@Entity
+@Table(name = "products")
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter()
 @Setter
-public class Roles implements BaseEntity<Integer> {
-    @Id() @Column(name="roles_id") @GeneratedValue(strategy = GenerationType.AUTO)
-    private int rolesId;
+public class Products implements BaseEntity<Integer> {
 
-    @Setter
-    @Column(unique = true)
-    private String description;
-
-    @Column()
-    private boolean status;
-
+    @Id()
+    @Column(name = "products_id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int productsId;
+    @Column
+    private String name;
+    @Column
+    private Double price;
+    @Column
+    private int stock;
+    @ManyToOne()
+    @JoinColumn(name = "enterprise_id")
+    private Enterprises enterprise;
+    @ManyToMany()
+    @JoinTable(
+            name = "users_products",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private Set<Users> users;
     @Column(name = "created_at")
     @CreatedDate()
     private Date createdAt;
-
     @Column(name = "updated_at")
-    @UpdateTimestamp()
+    @UpdateTimestamp
     private Date updatedAt;
-
     @Column(name = "created_by")
     private String createdBy;
-
     @Column(name = "updated_by")
     private String updatedBy;
+    @Column
+    private boolean status;
 
-    @OneToMany(mappedBy = "rol")
-    private Set<Users> users;
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "roles_policies",
-            joinColumns = @JoinColumn(name = "rol_id"),
-            inverseJoinColumns =  @JoinColumn(name = "permission_id")
-    )
-    private Set<Permissions> permissions;
-
-    public Roles(String d, String u) {
-        description = d;
+    public Products(String n, Double p, int s, String u, Enterprises e){
+        name = n;
+        price = p;
+        stock = s;
         createdBy = u;
         updatedBy = u;
-        status = true;
+        enterprise = e;
+    }
+    @Override
+    public void setId(Integer integer) {
+        productsId = integer;
     }
 
     @Override
-    public void setId(Integer integer) {
-        rolesId = integer;
-    }
-    @Override
     public Integer getId() {
-        return rolesId;
+        return productsId;
     }
 
     @Override

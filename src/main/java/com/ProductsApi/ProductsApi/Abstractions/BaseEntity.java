@@ -10,5 +10,4 @@ public interface BaseEntity<ID extends Serializable> {
     boolean getStatus();
     void setStatus(boolean status);
     void setUpdatedBy(String username);
-    void setUpdateAt(Date date);
 }

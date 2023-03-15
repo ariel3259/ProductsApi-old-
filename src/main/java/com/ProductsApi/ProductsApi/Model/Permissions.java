@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -35,9 +37,11 @@ public class Permissions implements BaseEntity<Integer> {
     private Set<Roles> roles;
 
     @Column(name = "created_at")
+    @CreatedDate()
     private Date createdAt;
 
     @Column(name = "updated_at")
+    @UpdateTimestamp()
     private Date updatedAt;
 
     @Column(name = "created_by")
@@ -50,12 +54,9 @@ public class Permissions implements BaseEntity<Integer> {
     private boolean status;
 
     public Permissions(String d, String u){
-        Date today = new Date(System.currentTimeMillis());
         description = d;
         createdBy = u;
         updatedBy = u;
-        createdAt = today;
-        updatedAt = today;
         status = true;
     }
 
@@ -84,8 +85,4 @@ public class Permissions implements BaseEntity<Integer> {
         updatedBy = username;
     }
 
-    @Override
-    public void setUpdateAt(Date date) {
-        updatedAt = date;
-    }
 }

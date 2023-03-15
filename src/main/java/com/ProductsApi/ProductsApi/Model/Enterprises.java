@@ -5,39 +5,43 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.sql.Date;
-import java.util.List;
-import java.util.Set;
 
-@Entity()
-@Table(name="roles", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "description")
+@Entity
+@Table(name = "enterprises", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"name"})
 })
-@AllArgsConstructor()
+@AllArgsConstructor
 @NoArgsConstructor
-@Getter()
-@Setter
-public class Roles implements BaseEntity<Integer> {
-    @Id() @Column(name="roles_id") @GeneratedValue(strategy = GenerationType.AUTO)
-    private int rolesId;
+@Getter
+public class Enterprises implements BaseEntity<Integer> {
 
-    @Setter
+    @Id()
+    @Column(name = "enterprises_id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int enterprisesId;
     @Column(unique = true)
+    private String name;
+    @Column
     private String description;
+    @Column
+    private String street;
+    @Column
+    private int height;
 
-    @Column()
-    private boolean status;
+    @ManyToOne()
+    @JoinColumn(name = "user_id")
+    private Users user;
 
     @Column(name = "created_at")
-    @CreatedDate()
+    @CreatedDate
     private Date createdAt;
 
     @Column(name = "updated_at")
-    @UpdateTimestamp()
+    @UpdateTimestamp
     private Date updatedAt;
 
     @Column(name = "created_by")
@@ -46,31 +50,28 @@ public class Roles implements BaseEntity<Integer> {
     @Column(name = "updated_by")
     private String updatedBy;
 
-    @OneToMany(mappedBy = "rol")
-    private Set<Users> users;
+    @Column
+    private boolean status;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "roles_policies",
-            joinColumns = @JoinColumn(name = "rol_id"),
-            inverseJoinColumns =  @JoinColumn(name = "permission_id")
-    )
-    private Set<Permissions> permissions;
-
-    public Roles(String d, String u) {
+    public Enterprises(String n, String d, String s, int h, String u, Users us){
+        name = n;
         description = d;
-        createdBy = u;
+        street = s;
+        height = h;
         updatedBy = u;
+        createdBy = u;
         status = true;
+        user = us;
     }
 
     @Override
     public void setId(Integer integer) {
-        rolesId = integer;
+        enterprisesId = integer;
     }
+
     @Override
     public Integer getId() {
-        return rolesId;
+        return enterprisesId;
     }
 
     @Override

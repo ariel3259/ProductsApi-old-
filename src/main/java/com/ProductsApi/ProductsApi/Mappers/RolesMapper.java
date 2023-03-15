@@ -38,7 +38,6 @@ public class RolesMapper implements Mapper<Integer, Roles, RolesRequest, RolesRe
     @Override
     public Roles map(RolesUpdate updateRequest, Roles entity, String username) {
         String description = updateRequest.getDescription().orElse(entity.getDescription());
-        entity.setUpdateAt(new Date(System.currentTimeMillis()));
         entity.setUpdatedBy(username);
         entity.setDescription(description);
         return entity;

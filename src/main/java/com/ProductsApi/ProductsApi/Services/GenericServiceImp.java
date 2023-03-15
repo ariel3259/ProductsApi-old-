@@ -11,8 +11,8 @@ import java.util.Optional;
 
 public abstract class GenericServiceImp<ID extends Serializable, Ent extends BaseEntity<ID>, Req, Res, Upd> implements GenericService<ID, Ent, Req, Res, Upd> {
 
-    private final Repository<ID, Ent> repository;
-    private final Mapper<ID, Ent, Req, Res, Upd> mapper;
+    protected final Repository<ID, Ent> repository;
+    protected final Mapper<ID, Ent, Req, Res, Upd> mapper;
 
     @Autowired
     public GenericServiceImp(Repository<ID, Ent> r, Mapper<ID, Ent, Req, Res, Upd> m){

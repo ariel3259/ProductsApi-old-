@@ -53,8 +53,20 @@ public class RolesService extends GenericServiceImp<Integer, Roles, RolesRequest
         return response;
     }
 
+    public RolesPermissionsResponse getOneRolPermissions(int rolId) {
+        Roles rol = repository.getReferenceByIdAndStatus(rolId, true);
+        if(rol == null) return new RolesPermissionsResponse();
+        Set<Permissions> permissions = rol.getPermissions();
+        Set<PermissionsResponse> permissionsResponse = permissions
+                .stream()
+                .map((permission) -> new PermissionsResponse(permission.getPermissionsId(), permission.getDescription()))
+                .collect(Collectors.toSet());
+        return new RolesPermissionsResponse(rolId, permissionsResponse);
+    }
+
     public RolesPermissionsResponse update(RolesPermissionsRequest request, int rolId){
-        Set<Permissions> permissions = permissionsRepository.findAllByIdsAndStatus(request.getPermissionsIds(), true);
+        Set<Integer> permissionsIds = request.getPermissionsIds();
+        Set<Permissions> permissions = permissionsRepository.findAllByIdsAndStatus(permissionsIds, true);
         Roles rol = repository.getReferenceByIdAndStatus(rolId, true);
         if(rol == null || permissions.isEmpty()) return new RolesPermissionsResponse();
         rol.setPermissions(permissions);

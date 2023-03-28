@@ -41,7 +41,7 @@ public class RolesController {
         return rolesPermissionsResponse;
     }
 
-    @GetMapping("permissions/{rolId}")
+    @GetMapping("{rolId}/permissions")
     public ResponseEntity<RolesPermissionsResponse> getOneRolPermission(@PathVariable("rolId") int rolId) {
         RolesPermissionsResponse response = ((RolesService)service).getOneRolPermissions(rolId);
         return ResponseEntity.ok(response);
@@ -52,7 +52,11 @@ public class RolesController {
         return service.getOne(id);
     }
 
-
+    @PutMapping("{rolId}/permissions")
+    public ResponseEntity<RolesPermissionsResponse> modify(@PathVariable("rolId") int rolId, @RequestBody() RolesPermissionsRequest request ) {
+        RolesPermissionsResponse response = ((RolesService)service).update(request, rolId);
+        return ResponseEntity.ok(response);
+    }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping

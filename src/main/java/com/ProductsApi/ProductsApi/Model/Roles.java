@@ -10,7 +10,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.sql.Date;
-import java.util.List;
 import java.util.Set;
 
 @Entity()

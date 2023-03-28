@@ -27,7 +27,7 @@ public class Products implements BaseEntity<Integer> {
     @Column
     private String name;
     @Column
-    private Double price;
+    private double price;
     @Column
     private int stock;
     @ManyToOne()

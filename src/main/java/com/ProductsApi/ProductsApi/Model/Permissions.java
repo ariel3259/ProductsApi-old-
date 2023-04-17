@@ -23,7 +23,7 @@ import java.util.Set;
 public class Permissions implements BaseEntity<Integer> {
 
     @Id() @Column(name = "permissions_id") @GeneratedValue(strategy = GenerationType.AUTO)
-    private int permissionsId;
+    private int id;
 
     @Column(unique = true)
     private String description;
@@ -62,12 +62,12 @@ public class Permissions implements BaseEntity<Integer> {
 
     @Override
     public void setId(Integer integer) {
-        permissionsId = integer;
+        id = integer;
     }
 
     @Override
     public Integer getId() {
-        return permissionsId;
+        return id;
     }
 
     @Override

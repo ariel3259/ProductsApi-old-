@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor()
+@Getter
 public class RolesResponse {
     private int rolesId;
     private String description;

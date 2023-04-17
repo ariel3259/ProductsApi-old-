@@ -15,7 +15,8 @@ public interface Repository<ID extends Serializable, T> extends JpaRepository<T,
 
     Page<T> findAllByStatus(Pageable page, boolean status);
     List<T> findAllByStatus(boolean status);
-    Set<T> findAllByIdsAndStatus(Iterable<ID> ids, boolean status);
+
+    T findByIdAndStatus(ID id, boolean status);
     T getReferenceByIdAndStatus(ID id, boolean status);
 
 }

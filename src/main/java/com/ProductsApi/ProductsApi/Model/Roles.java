@@ -10,10 +10,12 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.Set;
 
-@Entity()
-@Table(name="roles", uniqueConstraints = {
+
+@Entity(name = "roles")
+@Table(uniqueConstraints = {
         @UniqueConstraint(columnNames = "description")
 })
 @AllArgsConstructor()
@@ -21,8 +23,9 @@ import java.util.Set;
 @Getter()
 @Setter
 public class Roles implements BaseEntity<Integer> {
-    @Id() @Column(name="roles_id") @GeneratedValue(strategy = GenerationType.AUTO)
-    private int rolesId;
+    @Id()
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int roles_id;
 
     @Setter
     @Column(unique = true)
@@ -60,16 +63,18 @@ public class Roles implements BaseEntity<Integer> {
         description = d;
         createdBy = u;
         updatedBy = u;
+        users = new HashSet<>();
+        permissions = new HashSet<>();
         status = true;
     }
 
     @Override
     public void setId(Integer integer) {
-        rolesId = integer;
+        roles_id = integer;
     }
     @Override
     public Integer getId() {
-        return rolesId;
+        return roles_id;
     }
 
     @Override

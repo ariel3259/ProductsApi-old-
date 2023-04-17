@@ -23,7 +23,7 @@ public class RolesController {
     private GenericService<Integer, Roles, RolesRequest, RolesResponse, RolesUpdate> service;
 
     @GetMapping
-    public List<RolesResponse> getAll(@RequestParam("page`")Optional<Integer> offset, @RequestParam("limit") Optional<Integer> limit, HttpServletResponse response){
+    public List<RolesResponse> getAll(@RequestParam("page")Optional<Integer> offset, @RequestParam("limit") Optional<Integer> limit, HttpServletResponse response){
         PageResponse<RolesResponse> rolesResponse = service.getAll(offset, limit);
         long totalCount = rolesResponse.getTotalItems();
         String xTotalCount = String.valueOf(totalCount);

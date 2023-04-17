@@ -14,9 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -59,21 +57,25 @@ public class RolesService extends GenericServiceImp<Integer, Roles, RolesRequest
         Set<Permissions> permissions = rol.getPermissions();
         Set<PermissionsResponse> permissionsResponse = permissions
                 .stream()
-                .map((permission) -> new PermissionsResponse(permission.getPermissionsId(), permission.getDescription()))
+                .map((permission) -> new PermissionsResponse(permission.getId(), permission.getDescription()))
                 .collect(Collectors.toSet());
         return new RolesPermissionsResponse(rolId, permissionsResponse);
     }
 
     public RolesPermissionsResponse update(RolesPermissionsRequest request, int rolId){
         Set<Integer> permissionsIds = request.getPermissionsIds();
-        Set<Permissions> permissions = permissionsRepository.findAllByIdsAndStatus(permissionsIds, true);
+        List<Permissions> allPermissions = permissionsRepository.findAllById(permissionsIds);
+        Set<Permissions> permissions = allPermissions
+                .stream()
+                .filter(Permissions::getStatus)
+                .collect(Collectors.toSet());
         Roles rol = repository.getReferenceByIdAndStatus(rolId, true);
         if(rol == null || permissions.isEmpty()) return new RolesPermissionsResponse();
         rol.setPermissions(permissions);
         repository.save(rol);
         Set<PermissionsResponse> permissionsResponse = permissions
                 .stream()
-                .map((permission) -> new PermissionsResponse(permission.getPermissionsId(), permission.getDescription()))
+                .map((permission) -> new PermissionsResponse(permission.getId(), permission.getDescription()))
                 .collect(Collectors.toSet());
         RolesPermissionsResponse response = new RolesPermissionsResponse(rolId, permissionsResponse);
         return response;

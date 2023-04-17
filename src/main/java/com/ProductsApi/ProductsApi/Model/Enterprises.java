@@ -22,7 +22,7 @@ public class Enterprises implements BaseEntity<Integer> {
     @Id()
     @Column(name = "enterprises_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int enterprisesId;
+    private int id;
     @Column(unique = true)
     private String name;
     @Column
@@ -66,12 +66,12 @@ public class Enterprises implements BaseEntity<Integer> {
 
     @Override
     public void setId(Integer integer) {
-        enterprisesId = integer;
+        id = integer;
     }
 
     @Override
     public Integer getId() {
-        return enterprisesId;
+        return id;
     }
 
     @Override

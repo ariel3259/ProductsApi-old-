@@ -19,7 +19,7 @@ import java.util.Set;
 public class Users implements BaseEntity<Integer> {
 
     @Id() @Column(name = "users_id") @GeneratedValue(strategy = GenerationType.AUTO)
-    private int usersId;
+    private int id;
 
     @Column
     private String name;
@@ -74,7 +74,7 @@ public class Users implements BaseEntity<Integer> {
     @Column
     private boolean status;
 
-    public Users(String n, String l, String s, int h, long d, String e, String p, String u, Roles r){
+    public Users(String n, String l, String s, int h, long d, String e, String p, String u){
         name = n;
         lastname = l;
         street = s;
@@ -84,19 +84,18 @@ public class Users implements BaseEntity<Integer> {
         password = p;
         createdBy = u;
         updatedBy = u;
-        rol = r;
     }
 
 
 
     @Override
     public void setId(Integer integer) {
-        usersId = integer;
+        id = integer;
     }
 
     @Override
     public Integer getId() {
-        return usersId;
+        return id;
     }
 
     @Override

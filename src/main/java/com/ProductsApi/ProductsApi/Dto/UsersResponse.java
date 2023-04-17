@@ -3,11 +3,13 @@ package com.ProductsApi.ProductsApi.Dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Set;
 
 @AllArgsConstructor
 @Getter
+@Setter
 public class UsersResponse {
 
     private int usersId;

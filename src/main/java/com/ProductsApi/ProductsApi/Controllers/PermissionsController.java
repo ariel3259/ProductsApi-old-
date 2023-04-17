@@ -34,7 +34,7 @@ public class PermissionsController {
         List<Permissions> permissions = permissionsPage.getContent();
         List<PermissionsResponse> response = permissions
                 .stream()
-                .map(permission -> new PermissionsResponse(permission.getPermissionsId(), permission.getDescription()))
+                .map(permission -> new PermissionsResponse(permission.getId(), permission.getDescription()))
                 .toList();
         String xTotalCount = String.valueOf(permissionsPage.getTotalElements());
         httpResponse.setHeader("x-total-count", xTotalCount);

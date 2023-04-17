@@ -21,7 +21,7 @@ public abstract class GenericServiceImp<ID extends Serializable, Ent extends Bas
     }
 
     public PageResponse<Res> getAll(Optional<Integer> offset, Optional<Integer> limit) {
-        int page = offset.orElse(0) * limit.orElse(10);
+        int page = (offset.orElse(1) - 1) * limit.orElse(10);
         Pageable pageable = PageRequest.of(page, limit.orElse(10));
         Page<Ent> entities = repository.findAllByStatus(pageable, true);
         PageResponse<Res> responsePage = mapper.map(entities);
